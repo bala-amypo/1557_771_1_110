@@ -1,20 +1,35 @@
-package com.example.demo.model;
+package com.example.demo1.entity;
 
 import java.time.LocalDate;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String fullName;
+    @Email
+    @Column(unique = true)
     private String email;
     private String role;
     private LocalDate createdAt;
+    @PrePersist
+    protected void update(){
+        this.createdAt  =LocalDate.now();
+        if(this.role ==null){
+             this.role = "USER";
+        }
+    }
     public User(){
 
     }
