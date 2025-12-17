@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 import java.time.LocalDate;
-
+@Entity
 public class User {
     private long id;
     private String fullName;
