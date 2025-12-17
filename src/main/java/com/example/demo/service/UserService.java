@@ -1,8 +1,8 @@
-package com.example.demo1.service;
+package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo1.entity.User;
+import com.example.demo.entity.User;
 
 public interface UserService {
     User registerUser(User user);
