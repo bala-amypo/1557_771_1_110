@@ -1,13 +1,13 @@
-package com.example.demo1.service.impl;
+package com.example.demo.service.impl;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo1.entity.Resource;
-import com.example.demo1.repository.ResourceRepository;
-import com.example.demo1.service.ResourceService;
+import com.example.demo.entity.Resource;
+import com.example.demo.repository.ResourceRepository;
+import com.example.demo.service.ResourceService;
 @Service
 public class ResourceServiceImpl implements ResourceService{
     
