@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Resource;
 @Repository
 public interface ResourceRepository extends JpaRepository<Resource,Long>{
-      
+      boolean existsByResourceName(String resourceName);
 }
