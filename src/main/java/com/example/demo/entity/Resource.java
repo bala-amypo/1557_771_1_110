@@ -1,83 +1,55 @@
 package com.example.demo.entity;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 @Entity
-@Table(name = "resource")
+@Table(name = "resources")
 public class Resource {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @NotBlank
-    @Column(nullable = false)
+    private Long id;
+
+    @Column(unique = true, nullable = false)
     private String resourceName;
-    @NotBlank
+
+    @Column(nullable = false)
     private String resourceType;
-    @Min(value = 1)
-    private int capacity;
+
+    private Integer capacity;
+
     private String location;
-    private LocalDate createdAt;
+
+    private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "resource")
+    private List<ResourceAllocation> allocations;
+
+    public Resource() {}
+
+    public Resource(String resourceName, String resourceType,
+                    Integer capacity, String location) {
+        this.resourceName = resourceName;
+        this.resourceType = resourceType;
+        this.capacity = capacity;
+        this.location = location;
+    }
+
     @PrePersist
-    protected void updated(){
-        this.createdAt= LocalDate.now();
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
     }
 
-    public Resource(){
-
-    }
-    public Resource( String resourceName, String resourceType, int capacity, String location,
-            LocalDate createdAt) {
-        
-        this.resourceName = resourceName;
-        this.resourceType = resourceType;
-        this.capacity = capacity;
-        this.location = location;
-        this.createdAt = createdAt;
-    }
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
-    public String getResourceName() {
-        return resourceName;
-    }
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
-    }
-    public String getResourceType() {
-        return resourceType;
-    }
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
-    }
-    public int getCapacity() {
-        return capacity;
-    }
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-    public String getLocation() {
-        return location;
-    }
-    public void setLocation(String location) {
-        this.location = location;
-    }
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-    }
-    
+    // Getters and Setters
+    public Long getId() { return id; }
+    public String getResourceName() { return resourceName; }
+    public void setResourceName(String resourceName) { this.resourceName = resourceName; }
+    public String getResourceType() { return resourceType; }
+    public void setResourceType(String resourceType) { this.resourceType = resourceType; }
+    public Integer getCapacity() { return capacity; }
+    public void setCapacity(Integer capacity) { this.capacity = capacity; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 }

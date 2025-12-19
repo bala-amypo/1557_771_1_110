@@ -1,45 +1,40 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.AllocationRule;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.AllocationRuleRepository;
 import com.example.demo.service.AllocationRuleService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AllocationRuleServiceImpl implements AllocationRuleService {
 
-    private final AllocationRuleRepository allocationRuleRepository;
+    private final AllocationRuleRepository ruleRepository;
 
-    public AllocationRuleServiceImpl(AllocationRuleRepository allocationRuleRepository) {
-        this.allocationRuleRepository = allocationRuleRepository;
+    public AllocationRuleServiceImpl(AllocationRuleRepository ruleRepository) {
+        this.ruleRepository = ruleRepository;
     }
 
     @Override
     public AllocationRule createRule(AllocationRule rule) {
 
-        // duplicate validation
-        if (allocationRuleRepository.existsByRuleName(rule.getRuleName())) {
-            throw new IllegalArgumentException("Rule name already exists");
+        if (ruleRepository.existsByRuleName(rule.getRuleName())) {
+            throw new IllegalArgumentException("Rule already exists");
         }
 
-        return allocationRuleRepository.save(rule);
+        return ruleRepository.save(rule);
     }
 
     @Override
-    public AllocationRule getRule(long id) {
-
-        return allocationRuleRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("AllocationRule not found with id: " + id)
-                );
+    public AllocationRule getRule(Long id) {
+        return ruleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rule not found"));
     }
 
     @Override
     public List<AllocationRule> getAllRules() {
-        return allocationRuleRepository.findAll();
+        return ruleRepository.findAll();
     }
 }
