@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.AllocationRule;
 import java.util.List;
 
-import com.example.demo.entity.AllocationRule;
-
 public interface AllocationRuleService {
+
     AllocationRule createRule(AllocationRule rule);
-    AllocationRule getRule(long id);
+
+    AllocationRule getRule(Long id);
+
     List<AllocationRule> getAllRules();
 }
