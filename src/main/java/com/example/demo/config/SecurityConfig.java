@@ -31,12 +31,12 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/auth/**",
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**"
+                        "/auth/**",
+                        "/api/users/register",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**"
                 ).permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
             )
             .addFilterBefore(
                 jwtAuthenticationFilter,
