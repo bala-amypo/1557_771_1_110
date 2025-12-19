@@ -1,36 +1,33 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.entity.AllocationRule;
 import com.example.demo.service.AllocationRuleService;
+import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/rules")
 public class AllocationRuleController {
-    @Autowired
-    AllocationRuleService allocationRuleService;
+
+    private final AllocationRuleService ruleService;
+
+    public AllocationRuleController(AllocationRuleService ruleService) {
+        this.ruleService = ruleService;
+    }
 
     @PostMapping
-    public AllocationRule createAllocationRule(@Valid @RequestBody AllocationRule allocationRule){
-        return allocationRuleService.createRule(allocationRule);
+    public AllocationRule create(@RequestBody AllocationRule rule) {
+        return ruleService.createRule(rule);
     }
+
     @GetMapping
-    public List<AllocationRule> getAllRules(){
-        return allocationRuleService.getAllRules();
+    public List<AllocationRule> getAll() {
+        return ruleService.getAllRules();
     }
+
     @GetMapping("/{id}")
-    public AllocationRule getRule(@PathVariable long id){
-        return allocationRuleService.getRule(id);
+    public AllocationRule getById(@PathVariable Long id) {
+        return ruleService.getRule(id);
     }
 }

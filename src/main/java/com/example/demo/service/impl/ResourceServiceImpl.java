@@ -1,35 +1,44 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.Resource;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ResourceRepository;
 import com.example.demo.service.ResourceService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
-public class ResourceServiceImpl implements ResourceService{
-    
-    private ResourceRepository resourceRepository;
-    ResourceServiceImpl(ResourceRepository resourceRepository){
-        this.resourceRepository=resourceRepository;
+public class ResourceServiceImpl implements ResourceService {
+
+    private final ResourceRepository resourceRepository;
+
+    public ResourceServiceImpl(ResourceRepository resourceRepository) {
+        this.resourceRepository = resourceRepository;
     }
+
     @Override
-    public Resource createResource(Resource resource){
-        if(resourceRepository.existsByResourceName(resource.getResourceName())){
-            throw new IllegalArgumentException("Name exists");
+    public Resource createResource(Resource resource) {
+
+        if (resource.getCapacity() < 1) {
+            throw new IllegalArgumentException("Capacity must be at least 1");
         }
+
+        if (resourceRepository.existsByResourceName(resource.getResourceName())) {
+            throw new IllegalArgumentException("Resource name already exists");
+        }
+
         return resourceRepository.save(resource);
-
     }
+
     @Override
-    public Resource getResource(long id){
+    public Resource getResource(Long id) {
         return resourceRepository.findById(id)
-        .orElseThrow(()->new ResourceNotFoundException("Id doesn't exists"));
-    }
-    @Override
-    public  List<Resource> getAllResource(){
-           return resourceRepository.findAll();
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
     }
 
+    @Override
+    public List<Resource> getAllResources() {
+        return resourceRepository.findAll();
+    }
 }
