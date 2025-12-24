@@ -37,15 +37,19 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-            .sessionManagement(
-                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
+                // ✅ PUBLIC ENDPOINTS
                 .requestMatchers(
                         "/auth/**",
+                        "/api/users/register",   // ✅ ADD THIS
                         "/swagger-ui/**",
                         "/v3/api-docs/**"
                 ).permitAll()
+
+                // 🔐 PROTECTED
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
             );
