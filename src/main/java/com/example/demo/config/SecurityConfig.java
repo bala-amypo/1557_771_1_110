@@ -21,46 +21,40 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-    // Password encoder (for hashing passwords)
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Main security configuration
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            .csrf(csrf -> csrf.disable()) // disable CSRF
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                // public APIs
                 .requestMatchers(
                         "/auth/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**"
                 ).permitAll()
-
-                // protected APIs
                 .requestMatchers("/api/**").authenticated()
-
-                // anything else
                 .anyRequest().permitAll()
-            )
-            // add JWT filter
-            .addFilterBefore(jwtAuthenticationFilter,
-                    UsernamePasswordAuthenticationFilter.class);
+            );
+
+        http.addFilterBefore(
+                jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class
+        );
 
         return http.build();
-    }
-
-    // Authentication manager
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
     }
 }

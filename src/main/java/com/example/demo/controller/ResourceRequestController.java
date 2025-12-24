@@ -20,7 +20,6 @@ public class ResourceRequestController {
     public ResourceRequest createRequest(
             @PathVariable Long userId,
             @RequestBody ResourceRequest request) {
-
         return requestService.createRequest(userId, request);
     }
 
@@ -30,7 +29,7 @@ public class ResourceRequestController {
     }
 
     @GetMapping("/{id}")
-    public ResourceRequest getRequest(@PathVariable Long id) {
+    public ResourceRequest getById(@PathVariable Long id) {
         return requestService.getRequest(id);
     }
 
@@ -38,7 +37,6 @@ public class ResourceRequestController {
     public ResourceRequest updateStatus(
             @PathVariable Long requestId,
             @RequestParam String status) {
-
         return requestService.updateRequestStatus(requestId, status);
     }
 }

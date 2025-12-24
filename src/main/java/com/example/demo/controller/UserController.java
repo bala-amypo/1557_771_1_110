@@ -21,13 +21,13 @@ public class UserController {
         return userService.registerUser(user);
     }
 
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.getUser(id);
+    @GetMapping
+    public List<User> getAll() {
+        return userService.getAllUsers();
     }
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    @GetMapping("/{id}")
+    public User getById(@PathVariable Long id) {
+        return userService.getUser(id);
     }
 }
