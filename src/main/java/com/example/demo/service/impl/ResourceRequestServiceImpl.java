@@ -6,9 +6,9 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ResourceRequestRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ResourceRequestService;
-
+import org.springframework.stereotype.Service;
 import java.util.List;
-
+@Service
 public class ResourceRequestServiceImpl implements ResourceRequestService {
 
     private final ResourceRequestRepository reqRepo;
