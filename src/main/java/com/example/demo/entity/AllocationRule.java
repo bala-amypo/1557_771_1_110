@@ -11,36 +11,32 @@ public class AllocationRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String ruleName;
 
     private String ruleType;
 
-    private Integer priorityWeight;
+    private Integer priorityWeight = 0;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public AllocationRule() {}
 
-    public AllocationRule(String ruleName,
-                          String ruleType,
-                          Integer priorityWeight) {
+    public AllocationRule(String ruleName, String ruleType, Integer priorityWeight) {
         this.ruleName = ruleName;
         this.ruleType = ruleType;
         this.priorityWeight = priorityWeight;
     }
 
-    @PrePersist
-    public void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
-
-    // Getters and Setters
+    // getters and setters
     public Long getId() { return id; }
+
     public String getRuleName() { return ruleName; }
     public void setRuleName(String ruleName) { this.ruleName = ruleName; }
+
     public String getRuleType() { return ruleType; }
     public void setRuleType(String ruleType) { this.ruleType = ruleType; }
+
     public Integer getPriorityWeight() { return priorityWeight; }
     public void setPriorityWeight(Integer priorityWeight) { this.priorityWeight = priorityWeight; }
 }
