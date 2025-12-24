@@ -20,7 +20,8 @@ public class AllocationRule {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public AllocationRule() {}
+    public AllocationRule() {
+    }
 
     public AllocationRule(String ruleName, String ruleType, Integer priorityWeight) {
         this.ruleName = ruleName;
@@ -28,15 +29,40 @@ public class AllocationRule {
         this.priorityWeight = priorityWeight;
     }
 
-    // getters and setters
-    public Long getId() { return id; }
+    // ✅ ADD THESE (THIS FIXES THE ERROR)
+    public Long getId() {
+        return id;
+    }
 
-    public String getRuleName() { return ruleName; }
-    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getRuleType() { return ruleType; }
-    public void setRuleType(String ruleType) { this.ruleType = ruleType; }
+    public String getRuleName() {
+        return ruleName;
+    }
 
-    public Integer getPriorityWeight() { return priorityWeight; }
-    public void setPriorityWeight(Integer priorityWeight) { this.priorityWeight = priorityWeight; }
+    public void setRuleName(String ruleName) {
+        this.ruleName = ruleName;
+    }
+
+    public String getRuleType() {
+        return ruleType;
+    }
+
+    public void setRuleType(String ruleType) {
+        this.ruleType = ruleType;
+    }
+
+    public Integer getPriorityWeight() {
+        return priorityWeight;
+    }
+
+    public void setPriorityWeight(Integer priorityWeight) {
+        this.priorityWeight = priorityWeight;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }
