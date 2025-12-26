@@ -46,6 +46,7 @@ public class OpenApiConfig {
 
         return new OpenAPI()
                 // 🌍 Server
+                
                 .servers(List.of(
                         new Server().url("https://9081.pro604cr.amypo.ai")
                 ))
