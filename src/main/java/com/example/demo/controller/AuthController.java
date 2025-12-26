@@ -24,12 +24,13 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // ✅ REGISTER (NO PASSWORD ENCODING HERE)
     @PostMapping("/register")
     public User register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userService.registerUser(user);
     }
 
+    // ✅ LOGIN
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
 
